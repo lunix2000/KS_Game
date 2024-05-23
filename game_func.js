@@ -14,7 +14,7 @@ function getPlayerGuess() {
       alert("You cancelled the game.");
       return null;
     } else if (guessNumber <= 0 || isNaN(guessNumber) || guessNumber > 100) {
-      alert("invalid value, please enter a number");
+      alert("invalid value, please enter a number between 1 and 100 ");
       continue;
     } else {
       isValid = true;
@@ -30,7 +30,61 @@ function checkGuess(playerGuess, correctNumber) {
     return `${playerGuess}, too high`;
   } else if (playerGuess < correctNumber) {
     return `${playerGuess}, too low`;
-  } else return 'correct';
+  } else {
+    return "correct";
+  }
+}
+
+function updateLeaderboard(playerName, attempts, rank) {
+  let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+  leaderboard.push({
+    name: playerName,
+    attempts: attempts,
+    playerRank: rank,
+  });
+  leaderboard.sort((a, b) => a.attempts - b.attempts);
+  localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
+}
+
+function displayLeaderboard() {
+  const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
+  console.log("Leaderboard:");
+  leaderboard.forEach((entry, index) => {
+    console.log(
+      `${index + 1}. ${entry.name} - ${entry.attempts} attempts - Rank => ${
+        entry.playerRank
+      }`
+    );
+  });
+}
+
+//Bonus
+function reward(count) {
+  let message;
+  switch (count) {
+    case 1:
+      message = "Perfect!";
+      break;
+    case 2:
+    case 3:
+      message = "Unbelievable!";
+      break;
+    case 4:
+    case 5:
+      message = "Great!";
+      break;
+    case 6:
+    case 7:
+    case 8:
+      message = "Passable!";
+      break;
+    case 9:
+    case 10:
+      message = "Just Barely!";
+      break;
+  }
+
+  return message;
 }
 
 function game() {
@@ -50,11 +104,11 @@ function game() {
 
   console.log("please can you guess a number between 1 and 100");
 
-  while (counter < maxAttempts) {
+  while (counter <= maxAttempts) {
     const playerGuess = getPlayerGuess();
 
     if (playerGuess === null) {
-      console.log("Game cancelled by the player. ");
+      console.log("Game cancelled by the player.");
       return; //exit the game when cancelled
     }
     counter += 1;
@@ -69,63 +123,14 @@ function game() {
       console.log(`RANK => ${reward(counter)}`);
       updateLeaderboard(playerName, counter, reward(counter));
       displayLeaderboard();
-
-      return;
+      break; // Exit the loop when the correct guess is made
     }
   }
 
-  console.log(`sorry you have used up ${maxAttempts} attempts`);
-
-  function updateLeaderboard(playerName, attempts, rank) {
-    let leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
-    leaderboard.push({
-      name: playerName,
-      attempts: attempts,
-      playerRank: rank,
-    });
-    leaderboard.sort((a, b) => a.attempts - b.attempts);
-    localStorage.setItem("leaderboard", JSON.stringify(leaderboard));
-  }
-
-  function displayLeaderboard() {
-    const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
-    console.log("Leaderboard:");
-    leaderboard.forEach((entry, index) => {
-      console.log(
-        `${index + 1}. ${entry.name} - ${entry.attempts} attempts - Rank => ${
-          entry.playerRank
-        }`
-      );
-    });
-  }
-
-  //Bonus
-  function reward(count) {
-    let message;
-    switch (count) {
-      case 1:
-        message = "Perfect!";
-        break;
-      case 2:
-      case 3:
-        message = "Unbelievable!";
-        break;
-      case 4:
-      case 5:
-        message = "Great!";
-        break;
-      case 6:
-      case 7:
-      case 8:
-        message = "Passable!";
-        break;
-      case 9:
-      case 10:
-        message = "Just Barely!";
-        break;
-    }
-
-    return message;
+  if (counter === maxAttempts) {
+    console.log(
+      `Sorry, you have used up all ${maxAttempts} attempts. The correct number was ${randomNumber}`
+    );
   }
 
   const playAgain = confirm("Do you want to play again?");
