@@ -4,6 +4,46 @@ function generateRandomNumber() {
 
 }
 
+//guessplayergame
+function getPlayerGuess() {
+
+    let guessNumber;
+    let isValid = false;
+  
+    while (!isValid) {
+      guessNumber = prompt("Guess a number between 1 and 100 ")
+  
+      if (guessNumber === null && guessNumber <= 0 && isNaN(guessNumber)) {
+  
+        alert("invalid value, please enter a number");
+        continue;
+      }
+  
+      else {
+        isValid = true;
+      }
+  
+    }
+    return guessNumber
+  }
+
+  //checkguess
+
+
+function checkGuess(playerGuess, correctNumber) {
+
+    if (playerGuess > correctNumber) {
+      return "too high"
+    }
+    else if (playerGuess < correctNumber) {
+      return "too low"
+    }
+    else
+      return "correct"
+  
+  }
+  
+
 function reward(count) {
     let message;
     switch (count) {
