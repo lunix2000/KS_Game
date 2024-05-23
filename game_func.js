@@ -45,6 +45,12 @@ function checkGuess(playerGuess, correctNumber) {
 
 function game() {
 
+    const playerName = prompt("Enter your name:");
+    if (!playerName) {
+        alert("Name is required to play the game.");
+        return;
+    }
+
     const randomNumber = generateRandomNumber();
 
     let counter = 0;
@@ -117,7 +123,12 @@ function game() {
         return message;
     }
 
-
+    const playAgain = confirm("Do you want to play again?");
+    if (playAgain) {
+        game();
+    } else {
+        console.log("Thanks for playing!");
+    }
 }
 
 game()
