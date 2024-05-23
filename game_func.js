@@ -90,7 +90,7 @@ function game() {
         const leaderboard = JSON.parse(localStorage.getItem("leaderboard")) || [];
         console.log("Leaderboard:");
         leaderboard.forEach((entry, index) => {
-            console.log(`${index + 1}. ${entry.name} - ${entry.attempts} attempts - Rank => ${entry.rank}`);
+            console.log(`${index + 1}. ${entry.name} - ${entry.attempts} attempts - Rank => ${entry.playerRank}`);
         });
     }
 
