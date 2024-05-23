@@ -30,7 +30,7 @@ function checkGuess(playerGuess, correctNumber) {
     return `${playerGuess}, too high`;
   } else if (playerGuess < correctNumber) {
     return `${playerGuess}, too low`;
-  } else return "correct";
+  } else return 'correct';
 }
 
 function game() {
