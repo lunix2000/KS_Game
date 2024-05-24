@@ -51,8 +51,7 @@ function displayLeaderboard() {
   console.log("Leaderboard:");
   leaderboard.forEach((entry, index) => {
     console.log(
-      `${index + 1}. ${entry.name} - ${entry.attempts} attempts - Rank => ${
-        entry.playerRank
+      `${index + 1}. ${entry.name} - ${entry.attempts} attempts - Rank => ${entry.playerRank
       }`
     );
   });
@@ -104,6 +103,8 @@ function game() {
 
   console.log("please can you guess a number between 1 and 100");
 
+  console.log(`The number: ${randomNumber}`)
+
   while (counter < maxAttempts) {
     const playerGuess = getPlayerGuess();
 
@@ -125,13 +126,15 @@ function game() {
       displayLeaderboard();
       break; // Exit the loop when the correct guess is made
     }
+
+    if (counter === maxAttempts) {
+      console.log(
+        `Sorry, you have used up all ${maxAttempts} attempts. The correct number was ${randomNumber}`
+      );
+    }
   }
 
-  if (counter === maxAttempts) {
-    console.log(
-      `Sorry, you have used up all ${maxAttempts} attempts. The correct number was ${randomNumber}`
-    );
-  }
+
 
   const playAgain = confirm("Do you want to play again?");
   if (playAgain) {
