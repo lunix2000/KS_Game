@@ -103,7 +103,7 @@ function game() {
 
   console.log("please can you guess a number between 1 and 100");
 
-  console.log(`The number: ${randomNumber}`)
+  
 
   while (counter < maxAttempts) {
     const playerGuess = getPlayerGuess();
